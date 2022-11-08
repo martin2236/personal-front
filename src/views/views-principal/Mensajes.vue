@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class=" mt-5" style="height 100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
     <v-card width="350px">
         <v-card-title>
            enviar nuevo mensaje
