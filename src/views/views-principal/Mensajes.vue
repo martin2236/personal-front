@@ -62,7 +62,7 @@ export default {
         const token = localStorage.getItem('token');
        if(this.$refs.form.validate()){
         console.log('se envio el mensaje',mensaje, token)
-        fetch('http://localhost:8080/personal/mensajes',{
+        fetch('https://personal-back.herokuapp.com/personal/mensajes',{
             method:'POST',
             headers:{
                 'x-token':token,
