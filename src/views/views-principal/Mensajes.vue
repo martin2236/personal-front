@@ -1,8 +1,17 @@
 <template>
 <div class=" mt-5" style="height 100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-    <v-card width="350px">
+    <v-combobox
+        outlined
+        style="min-width:350px"
+        placeholder="seleccione un tipo de mensaje"
+        :items="opciones"
+        v-model="tipo"
+    >
+
+    </v-combobox>
+    <v-card v-if="tipo == 'mensaje corto'" width="350px">
         <v-card-title>
-           enviar nuevo mensaje
+           Enviar nuevo mensaje
         </v-card-title>
         <v-card-text>
               <v-form
@@ -13,17 +22,92 @@
             class="mt-5 text-center"
             >
                 <v-text-field
-                label="titulo"
+                label="Titulo"
+                prepend-icon="mdi-pencil-outline"
                     :rules="tituloRules"
                     v-model="titulo"
                 >
                 </v-text-field>
                 <v-text-field
-                label="mensaje"
+                label="Mensaje"
+                prepend-icon="mdi-email-plus-outline"
                     :rules="mensajeRules"
                     v-model="mensaje"
                 >
                 </v-text-field>
+                <v-btn color=" primary" @click="submit()">
+                    enviar
+                </v-btn>
+        </v-form>
+        </v-card-text>
+    </v-card>
+
+    <v-card v-if="tipo == 'comunicado'" width="350px">
+        <v-card-title>
+           Enviar nuevo comunicado
+        </v-card-title>
+        <v-card-text>
+              <v-form
+            ref="form" 
+            v-model="valid"
+            lazy-validation
+            
+            class="mt-5 text-center"
+            >
+                <v-text-field
+                label="Titulo"
+                prepend-icon="mdi-pencil-outline"
+                    :rules="tituloRules"
+                    v-model="titulo"
+                >
+                </v-text-field>
+                <v-textarea
+                    height="100px"
+                    label="Mensaje"
+                    prepend-icon="mdi-email-plus-outline"
+                    no-resize="true"
+                    :rules="mensajeRules"
+                    v-model="mensaje"
+                >
+                </v-textarea>
+                <v-btn color=" primary" class="mt-3" @click="submit()">
+                    enviar
+                </v-btn>
+        </v-form>
+        </v-card-text>
+    </v-card>
+
+    <v-card v-if="tipo == 'mensaje con imagen'" width="350px">
+        <v-card-title>
+           Enviar nuevo mensaje con imagen
+        </v-card-title>
+        <v-card-text>
+              <v-form
+            ref="form" 
+            v-model="valid"
+            lazy-validation
+            
+            class="mt-5 text-center"
+            >
+                <v-text-field
+                prepend-icon="mdi-pencil-outline"
+                label="Titulo"
+                    :rules="tituloRules"
+                    v-model="titulo"
+                >
+                </v-text-field>
+                
+                <v-text-field
+                prepend-icon="mdi-email-plus-outline"
+                label="Mensaje"
+                    :rules="mensajeRules"
+                    v-model="mensaje"
+                >
+                </v-text-field>
+                <v-file-input
+                    accept="image/*"
+                    label="imagen"
+                ></v-file-input>
                 <v-btn color=" primary" @click="submit()">
                     enviar
                 </v-btn>
@@ -38,9 +122,11 @@ export default {
  name: 'mensajes-view',
  data () {
       return {
+        tipo:'mensaje corto',
         titulo:'',
         mensaje:'',
         valid: false,
+        opciones:['mensaje corto','comunicado','mensaje con imagen'],
         mensajeRules: [
         v => !!v || 'Coloque un mensaje',
         v => v.length <= 50 || 'El mensaje debe tener menos de 50 caracteres',
@@ -62,7 +148,7 @@ export default {
         const token = localStorage.getItem('token');
        if(this.$refs.form.validate()){
         console.log('se envio el mensaje',mensaje, token)
-        fetch('https://personal-back.herokuapp.com/personal/mensajes',{
+        fetch('http://localhost:8080/personal/mensajes',{
             method:'POST',
             headers:{
                 'x-token':token,

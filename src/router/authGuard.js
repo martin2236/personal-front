@@ -1,7 +1,7 @@
  const authGuard = (to, from, next) => {
     const token = localStorage.getItem('token');
     if(token){
-        fetch('https://personal-back.herokuapp.com/personal/auth',{
+        fetch('http://localhost:8080/personal/auth',{
             method:'GET',
             headers:{
                 'x-token':token,
@@ -18,18 +18,6 @@
                     }
                 })
             }
-            
-        //    if(data.msg != 'token ok'){
-        //        next("/")
-        //    }else{
-        //        next()
-        //    }
-        //   }).catch(error =>{
-        //    console.log(error)
-        //   }) 
-        //}else{
-        //    console.log('no hay token')
-        //}
     };
 
     export default authGuard

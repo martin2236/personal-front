@@ -1,7 +1,7 @@
 <template>
        <v-parallax :src="require('@/assets/fondo.png')"  style="height:100%;">
          <v-container fluid class="d-flex flex-row flex-wrap align-content-center justify-space-around pa-0"  style="height:100%;">
-            <!--<v-col  cols="12" lg="6" md="6" sm="6" style="background-color:#0ea5e9;  height:80%;" class="ma-0 pa-0">
+            <v-col  cols="12" lg="6" md="6" sm="6" style="background-color:#0ea5e9;  height:80%;" class="ma-0 pa-0">
                <v-carousel
                class="pa-0 ma-0"
                 height="100%"
@@ -17,7 +17,7 @@
                     transition="fade-transition"
                     ></v-carousel-item>
                 </v-carousel>
-            </v-col>-->
+            </v-col>
             <v-col cols="12" lg="5" md="5" sm="5" style="height:80%;"  class="ma-0 pa-0">
                 <v-card style="height:100%;" class=" d-flex flex-column justify-space-around">
                     <v-card-title class="d-flex flex-row justify-center">
@@ -43,7 +43,7 @@
                                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                                 :rules="passwordRules"
                                 :type="show1 ? 'text' : 'password'"
-                                label="contraseña"
+                                label="Contraseña"
                                 @click:append="show1 = !show1"
                             ></v-text-field>
                             
@@ -129,7 +129,7 @@ export default {
             let password = this.password
                if( this.$refs.form.validate()){
                 console.log(usuario, password)
-                   fetch('https://personal-back.herokuapp.com/personal/auth/login',{
+                   fetch('http://localhost:8080/personal/auth/login',{
                         method:'POST',
                         headers:{
                             'Content-Type':'application/json'
